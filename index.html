@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MSK – Full Stack Engineer</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <!-- EmailJS SDK: lets us send emails from the browser without a backend -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // ── EMAILJS INIT ──
+    // Replace "YOUR_PUBLIC_KEY" with your actual EmailJS Public Key
+    (function(){
+      // Replace the string below with your real EmailJS public key
+      emailjs.init("onbBXg0xYmOsFfYd2");
+    })();
+  </script>
   <style>
     :root {
       --bg: #080c10;
@@ -804,13 +814,12 @@
       </div>
       <div class="contact-form anim-fade-right">
         <div class="form-row">
-          <div class="form-group"><label>YOUR NAME</label><input type="text" placeholder="John Doe" /></div>
-          <div class="form-group"><label>YOUR EMAIL</label><input type="email" placeholder="john@company.com" /></div>
+          <div class="form-group"><label>YOUR NAME</label><input id="cf-name" type="text" placeholder="John Doe" /></div>
+          <div class="form-group"><label>YOUR EMAIL</label><input id="cf-email" type="email" placeholder="john@company.com" /></div>
         </div>
-        <div class="form-group"><label>SUBJECT</label><input type="text" placeholder="Project Inquiry / Collaboration" /></div>
-        <div class="form-group"><label>MESSAGE</label><textarea rows="5" placeholder="Tell me about your project..."></textarea></div>
-        <button class="btn-primary" style="align-self:flex-start;cursor:pointer;"
-          onclick="this.textContent='Message Sent ✓';this.style.background='#00c896';this.style.boxShadow='0 10px 36px rgba(0,200,150,0.4)';">
+        <div class="form-group"><label>SUBJECT</label><input id="cf-subject" type="text" placeholder="Project Inquiry / Collaboration" /></div>
+        <div class="form-group"><label>MESSAGE</label><textarea id="cf-message" rows="5" placeholder="Tell me about your project..."></textarea></div>
+        <button id="cf-btn" class="btn-primary" style="align-self:flex-start;cursor:pointer;" onclick="sendContactForm()">
           Send Message
         </button>
       </div>
@@ -870,6 +879,56 @@
         a.classList.toggle('active', a.getAttribute('href') === '#' + current);
       });
     });
+
+    // ── CONTACT FORM ──
+    function sendContactForm() {
+      // Grab values from each input field
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const subject = document.getElementById('cf-subject').value.trim();
+      const message = document.getElementById('cf-message').value.trim();
+      const btn     = document.getElementById('cf-btn');
+
+      // Basic validation — make sure nothing is empty
+      if (!name || !email || !subject || !message) {
+        alert('Please fill in all fields before sending.');
+        return;
+      }
+
+      // Change button to show loading state
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      // Send via EmailJS
+      // Replace "YOUR_SERVICE_ID" and "YOUR_TEMPLATE_ID" with your actual IDs from EmailJS dashboard
+      // Ensure these IDs are strings and match the ones in your EmailJS dashboard
+      emailjs.send("service_qjj9eaa", "template_w8lsaxj", {
+        from_name:    name,
+        from_email:   email,
+        subject:      subject,
+        message:      message,
+        to_email:     "k.shayan7268@gmail.com"   // your receiving email
+      })
+      .then(function() {
+        // Success! Show confirmation
+        btn.textContent = 'Message Sent ✓';
+        btn.style.background    = '#00c896';
+        btn.style.boxShadow     = '0 10px 36px rgba(0,200,150,0.4)';
+
+        // Clear the form fields
+        document.getElementById('cf-name').value    = '';
+        document.getElementById('cf-email').value   = '';
+        document.getElementById('cf-subject').value = '';
+        document.getElementById('cf-message').value = '';
+      })
+      .catch(function(error) {
+        // Something went wrong
+        console.error('EmailJS error:', error);
+        alert('Oops! Something went wrong. Please try again.');
+        btn.textContent = 'Send Message';
+        btn.disabled = false;
+      });
+    }
 
     // ── HAMBURGER MENU ──
     const hamburger = document.getElementById('hamburger');
