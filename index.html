@@ -131,7 +131,7 @@
     }
     @keyframes glowFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-25px) scale(1.03)} }
 
-    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; min-width: 0; width: 100%; }
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: 0.5rem;
@@ -153,6 +153,7 @@
       font-family: 'Syne', sans-serif;
       font-size: clamp(3rem,7vw,5.5rem);
       font-weight: 800; line-height: 1.02; letter-spacing: -0.02em;
+      overflow-wrap: break-word; word-break: break-word;
       animation: fadeUp 0.6s ease 0.3s both;
     }
     .hero-name .line { display: block; overflow-x: visible; overflow-y: clip; }
@@ -170,15 +171,15 @@
       color: var(--accent);
       position: relative;
       text-shadow: 0 0 40px rgba(0,229,200,0.2);
-    }
-    .hero-name .highlight::after {
-      content: '';
-      position: absolute; bottom: 6px; left: 0; right: 0;
-      height: 3px; background: linear-gradient(90deg,var(--accent),transparent);
+      background-image: linear-gradient(90deg, var(--accent), transparent);
+      background-repeat: no-repeat;
+      background-position: left bottom 6px;
+      background-size: 100% 3px;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
       animation: underlineGrow 0.8s ease 0.9s both;
-      transform-origin: left;
     }
-    @keyframes underlineGrow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+    @keyframes underlineGrow { from{background-size:0% 3px} to{background-size:100% 3px} }
 
     .hero-subtitle {
       font-family: 'Space Mono', monospace; font-size: 1rem;
@@ -519,13 +520,12 @@
       .skills-grid { grid-template-columns:1fr; }
       .nav-links { display:none; }
       .hamburger { display:flex; }
-      .mobile-menu { display:flex; }
     }
     @media(max-width:600px){
       nav { padding:1rem 4%; }
       section { padding:4.5rem 4%; }
       #home { padding:0 4%; padding-top:80px; }
-      .hero-name { font-size:clamp(2.4rem,10vw,3.5rem); }
+      .hero-name { font-size:clamp(2rem,9vw,3.5rem); }
       .hero-subtitle { font-size:0.85rem; }
       .hero-desc { font-size:0.95rem; }
       .hero-cta { flex-direction:column; gap:0.75rem; }
@@ -600,7 +600,7 @@
       </p>
       <div class="hero-cta">
         <a href="#services" class="btn-primary">View Services</a>
-        <a href="Muhammad_Shayan_Khan_Resume_2026.pdf" download="Muhammad_Shayan_Khan_CV.pdf" class="btn-download">
+        <a href="Shayan_Khan_Resume.pdf" download="Muhammad_Shayan_Khan_CV.pdf" class="btn-download">
           <span class="dl-icon">⬇</span> Download CV
         </a>
         <a href="#contact" class="btn-ghost">Get in Touch</a>
@@ -608,7 +608,7 @@
       <div class="hero-stats">
         <div class="stat-item"><div class="stat-num">4+</div><div class="stat-label">Years Coding</div></div>
         <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Projects Built</div></div>
-        <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Work Roles</div></div>
+        <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Work Roles</div></div>
       </div>
     </div>
   </section>
@@ -627,7 +627,7 @@
         <p>Whether you need a slick business website, a custom web application, or an AI-powered solution — I deliver results that are <strong>clean, efficient, and built to last</strong>.</p>
         <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
           <a href="mailto:kshayan7268@gmail.com?subject=Portfolio Contact" class="btn-primary">Email Me</a>
-          <a href="Muhammad_Shayan_Khan_Resume_2026.pdf" download="Muhammad_Shayan_Khan_CV.pdf" class="btn-download">
+          <a href="Shayan_Khan_Resume.pdf" download="Muhammad_Shayan_Khan_CV.pdf" class="btn-download">
             <span class="dl-icon">⬇</span> Download CV
           </a>
         </div>
@@ -717,25 +717,28 @@
       </div>
       <div class="project-card anim-fade-up delay-2">
         <span class="project-number">02</span>
-        <span class="project-badge">DATABASE SYSTEM</span>
-        <h3 class="project-title">Career-Connect — Job Application Portal</h3>
-        <p class="project-desc"><strong>Objective:</strong> Multi-role job portal for students, recruiters, and admins.<br><br><strong>Strategy:</strong> Engineered a normalized MySQL schema with FK constraints and RBAC. Python interface for CRUD operations. SQL JOINs track candidate statuses across the full hiring pipeline.</p>
-        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">MySQL</span><span class="tech-tag">SQL</span><span class="tech-tag">RBAC</span></div>
-      </div>
-      <div class="project-card anim-fade-up delay-3">
-        <span class="project-number">03</span>
-        <span class="project-badge">SYSTEMS / GAME ENGINE</span>
-        <h3 class="project-title">Multi-threaded Real-Time Pac-Man Engine</h3>
-        <p class="project-desc"><strong>Objective:</strong> Demonstrate OS-level concurrency with a playable game.<br><br><strong>Strategy:</strong> Pac-Man clone in C and OpenGL. Each ghost runs on its own POSIX thread. Semaphores and Mutexes prevent race conditions across 6+ concurrent threads with high-resolution timers.</p>
-        <div class="project-tech"><span class="tech-tag">C</span><span class="tech-tag">OpenGL</span><span class="tech-tag">POSIX Threads</span><span class="tech-tag">Semaphores</span></div>
-      </div>
-      <div class="project-card anim-fade-up delay-4">
-        <span class="project-number">04</span>
         <span class="project-badge">AI / COMPUTER VISION</span>
         <h3 class="project-title">Helmet Detection System — Octans Digital</h3>
         <p class="project-desc"><strong>Objective:</strong> Automate safety compliance monitoring at worksites.<br><br><strong>Strategy:</strong> Trained a high-accuracy object detection model on a custom-built dataset. Deployed with Python and OpenCV for real-time detection in live video streams.</p>
         <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">TensorFlow</span><span class="tech-tag">Computer Vision</span></div>
       </div>
+      <div class="project-card anim-fade-up delay-3">
+        <span class="project-number">03</span>
+        <span class="project-badge">DATABASE SYSTEM</span>
+        <h3 class="project-title">Career-Connect — Job Application Portal</h3>
+        <p class="project-desc"><strong>Objective:</strong> Multi-role job portal for students, recruiters, and admins.<br><br><strong>Strategy:</strong> Engineered a normalized MySQL schema with FK constraints and RBAC. Python interface for CRUD operations. SQL JOINs track candidate statuses across the full hiring pipeline.</p>
+        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">MySQL</span><span class="tech-tag">SQL</span><span class="tech-tag">RBAC</span></div>
+      </div>
+      <div class="project-card anim-fade-up delay-4">
+        <span class="project-number">04</span>
+        <span class="project-badge">SYSTEMS / GAME ENGINE</span>
+        <h3 class="project-title">Multi-threaded Real-Time Pac-Man Engine</h3>
+        <p class="project-desc"><strong>Objective:</strong> Demonstrate OS-level concurrency with a playable game.<br><br><strong>Strategy:</strong> Pac-Man clone in C and OpenGL. Each ghost runs on its own POSIX thread. Semaphores and Mutexes prevent race conditions across 6+ concurrent threads with high-resolution timers.</p>
+        <div class="project-tech"><span class="tech-tag">C</span><span class="tech-tag">OpenGL</span><span class="tech-tag">POSIX Threads</span><span class="tech-tag">Semaphores</span></div>
+      </div>
+    </div>
+    <div class="anim-fade-up" style="text-align:center;margin-top:3rem;">
+      <a href="https://github.com/khan-shayan9" target="_blank" rel="noopener" class="btn-ghost">View More on GitHub →</a>
     </div>
   </section>
 
@@ -748,6 +751,18 @@
     </div>
     <div class="timeline">
       <div class="timeline-item anim-fade-left delay-1">
+        <div class="timeline-date">JUL 2026 – AUG 2026 · ONSITE</div>
+        <div class="timeline-company">SPSNET</div>
+        <div class="timeline-role">Software Intern · Islamabad</div>
+        <ul class="timeline-bullets">
+          <li>Built an AI-based document classification system for government records, covering official record series across the Library of Virginia GS-17, GS-02, and GS-14 schedules</li>
+          <li>Developed the Node.js/Express backend using a strict layered architecture (route → controller → service → utility)</li>
+          <li>Implemented a vector search pipeline with 768-dimensional embeddings and a Milvus/Zilliz vector database using cosine similarity</li>
+          <li>Integrated LLM-based classification (Llama 3.1) with RAG prompting, similarity gating, and a confidence-scoring system</li>
+          <li>Built a multi-format text extraction and OCR pipeline (PDF, DOCX, Excel) with selective page-level OCR to keep processing fast</li>
+        </ul>
+      </div>
+      <div class="timeline-item anim-fade-left delay-2">
         <div class="timeline-date">FEB 2026 · REMOTE</div>
         <div class="timeline-company">The Fitness Lab</div>
         <div class="timeline-role">Full Stack Developer · Rawalpindi</div>
@@ -758,7 +773,7 @@
           <li>Built payment logging and an analytics dashboard for monthly revenue tracking</li>
         </ul>
       </div>
-      <div class="timeline-item anim-fade-left delay-2">
+      <div class="timeline-item anim-fade-left delay-3">
         <div class="timeline-date">OCT 2025 · REMOTE</div>
         <div class="timeline-company">Naeem &amp; Associates</div>
         <div class="timeline-role">Freelance Web Developer · Islamabad</div>
@@ -769,7 +784,7 @@
           <li>Designed branded business cards consistent with the company identity</li>
         </ul>
       </div>
-      <div class="timeline-item anim-fade-left delay-3">
+      <div class="timeline-item anim-fade-left delay-4">
         <div class="timeline-date">JULY 2024 · ONSITE</div>
         <div class="timeline-company">Octans Digital</div>
         <div class="timeline-role">AI/ML Intern · Islamabad</div>
@@ -810,6 +825,10 @@
         <div class="contact-item">
           <div class="contact-icon">🎓</div>
           <div><div class="contact-label">UNIVERSITY</div><div class="contact-value">FAST NUCES, Islamabad</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🐙</div>
+          <div><div class="contact-label">GITHUB</div><div class="contact-value"><a href="https://github.com/khan-shayan9" target="_blank" rel="noopener">github.com/khan-shayan9</a></div></div>
         </div>
       </div>
       <div class="contact-form anim-fade-right">
